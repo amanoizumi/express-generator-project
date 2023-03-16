@@ -6,13 +6,12 @@ const logger = require('morgan');
 const cors = require('cors')
 
 // 載入路由檔案
-const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 
-require('./connections');
-
 const app = express();
+
+require('./connections');
 
 app.use(cors());
 app.use(logger('dev'));
@@ -22,8 +21,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 使用路由
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/posts', postsRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/posts', postsRouter);
 
 module.exports = app;
