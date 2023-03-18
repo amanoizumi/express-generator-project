@@ -10,10 +10,10 @@ const posts = {
 
   async createPosts(req, res) {
     try {
-      const data = req.body;
-      if (data.name && data.content) {
-        const info = await Post.create(data);
-        handleSuccess(res, info);
+      const { body } = req;
+      if (body.name && body.content) {
+        const postCreate = await Post.create(body);
+        handleSuccess(res, postCreate);
       } else {
         handleError(res);
       }
@@ -22,14 +22,18 @@ const posts = {
     }
   },
   async deleteAllPosts(req, res) {
-    const posts = await Post.deleteMany({});
-    handleSuccess(res, posts);
+    try {
+      const delAllPosts = await Post.deleteMany({});
+      handleSuccess(res, delAllPosts);
+    } catch (err) {
+      handleError(res, err);
+    }
   },
   async deletePostByID(req, res) {
     try {
       const { id } = req.params;
-      const info = await Post.findByIdAndDelete(id);
-      if (info === null) {
+      const delOnePost = await Post.findByIdAndDelete(id);
+      if (delOnePost === null) {
         handleError(res);
       } else {
         handleSuccess(res);
