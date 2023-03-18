@@ -1,21 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const PostControllers = require('../controllers/posts');
+const postControllers = require('../controllers/posts');
 
 router.get('/', (req, res) => {
-  PostControllers.getPosts(req, res);
+  postControllers.getPosts(req, res);
 });
 router.post('/', (req, res) => {
-  PostControllers.createPosts(req, res);
+  postControllers.createPosts(req, res);
 });
 router.delete('/', (req, res) => {
-  PostControllers.deleteAllPosts(req, res);
+  postControllers.deleteAllPosts(req, res);
 });
 router.delete('/:id', (req, res) => {
-  PostControllers.deletePostByID(req, res);
+  postControllers.deletePostByID(req, res);
 });
 router.patch('/:id', (req, res) => {
-  PostControllers.editOnePost(req, res);
+  postControllers.editOnePost(req, res);
 });
 
 module.exports = router;
