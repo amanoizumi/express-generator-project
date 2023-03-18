@@ -33,11 +33,7 @@ const posts = {
     try {
       const { id } = req.params;
       const delOnePost = await Post.findByIdAndDelete(id);
-      if (delOnePost === null) {
-        handleError(res);
-      } else {
-        handleSuccess(res);
-      }
+      handleSuccess(res, delOnePost);
     } catch (err) {
       handleError(res, err);
     }
