@@ -47,7 +47,8 @@ const posts = {
         const editContent = {
           content: body.content,
         };
-        const editPost = await Post.findByIdAndUpdate(id, editContent);
+        // 加入第三個參數 { new: true, } 可以回傳新的貼文
+        const editPost = await Post.findByIdAndUpdate(id, editContent, { new: true, });
         handleSuccess(res, editPost);
       } else {
         handleError(res);
