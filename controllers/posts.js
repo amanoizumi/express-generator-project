@@ -1,7 +1,7 @@
 const Post = require('../models/PostsModel.js');
 
-const handleErrorAsync = require('../utils/handleErrorAsync');
-const AppError = require('./../utils/appError');
+// const handleErrorAsync = require('../utils/handleErrorAsync');
+// const AppError = require('./../utils/appError');
 
 const handleSuccess = require('../service/handleSuccess');
 const handleError = require('../service/handleError');
