@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema(
     },
     photo: String,
     createdAt: {
-      type: Date,
+      type: Number,
       default: Date.now(),
       select: false,
     },
