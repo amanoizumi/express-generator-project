@@ -34,7 +34,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 使用路由
-app.use('/api/users', usersRouter);
+app.use('/api/user', usersRouter);
 app.use('/api/posts', postsRouter);
 // app.use('/api/upload', uploadRouter);
 
