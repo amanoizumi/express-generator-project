@@ -1,14 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const usersControllers = require('../controllers/users');
 
-router.get('/', (req, res, next) => {
-  /**
-   * #swagger.tags = ['Users - 使用者']
-   * #swagger.ignore = true
-   */
-  res.status(200).json({
-    name: 'izumi',
-  });
-});
+
+router.get('/sign_up', usersControllers.signUp);
 
 module.exports = router;

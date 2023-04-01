@@ -13,6 +13,7 @@ const swaggerFile = require('./swagger-output.json');
 // 載入路由檔案
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
+const uploadRouter = require('./routes/upload');
 
 process.on('uncaughtException', err => {
   // 記錄錯誤下來，等到服務都處理完後，停掉該 process
@@ -35,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // 使用路由
 app.use('/api/users', usersRouter);
 app.use('/api/posts', postsRouter);
+// app.use('/api/upload', uploadRouter);
 
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 

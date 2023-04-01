@@ -14,13 +14,13 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       select: false,
     },
-    photo: String,
     password: {
       type: String,
       required: [true, '請輸入密碼'],
       minlength: 8,
       select: false,
     },
+    photo: String,
     createdAt: {
       type: Date,
       default: Date.now(),
