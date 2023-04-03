@@ -19,7 +19,10 @@ const userSchema = new mongoose.Schema(
       minlength: 8,
       select: false,
     },
-    photo: String,
+    photo: {
+      default: 'https://fakeimg.pl/200x200/?text=No%20Avatar',
+      type: String,
+    },
     createdAt: {
       type: Number,
       default: Date.now(),
@@ -29,6 +32,6 @@ const userSchema = new mongoose.Schema(
   { versionKey: false, collection: 'user' }
 );
 
-const users = mongoose.model('users', userSchema);
+const User = mongoose.model('user', userSchema);
 
-module.exports = users;
+module.exports = User;

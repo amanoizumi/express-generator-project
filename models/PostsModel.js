@@ -6,43 +6,28 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Content 未填寫'],
     },
-    type: {
-      type: String,
-      enum: ['group', 'person'],
-      required: [true, '貼文類型 type 未填寫'],
-    },
     image: {
       type: String,
       default: '',
     },
     createdAt: {
       type: Number,
-      default: Date.now(),
+      default: Date.now,
       select: false,
     },
-    name: {
-      type: String,
-      required: [true, '貼文姓名未填寫'],
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'user',
+      required: [true, '貼文 ID 未填寫'],
     },
-    likes: {
-      type: Number,
-      default: 0,
-    },
-
-    comments: {
-      type: Number,
-      default: 0,
-    },
-    tags: [
-      {
-        type: String,
-        required: [true, '貼文標籤 tags 未填寫'],
-      },
-    ],
   },
-  { versionKey: false }
+  {
+    versionKey: false,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
 );
 
-const posts = mongoose.model('posts', postSchema);
+const Post = mongoose.model('Post', postSchema);
 
-module.exports = posts;
+module.exports = Post;

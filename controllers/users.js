@@ -57,8 +57,7 @@ const signIn = handleErrorAsync(async (req, res, next) => {
 
 const getProfile = handleErrorAsync(async (req, res, next) => {
   const { id } = req.user;
-  console.log(id);
-  const user = await User.findById(id).select('+email');
+  const user = await User.findById(id).select('+email photo name');
   handleSuccess(res, user);
 });
 

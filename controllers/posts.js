@@ -24,14 +24,14 @@ const getPosts = handleErrorAsync(async (req, res) => {
   const timeSort = req.query.timeSort === 'asc' ? 'createdAt' : '-createdAt';
   const q = req.query.q !== undefined ? { content: new RegExp(req.query.q) } : {};
 
-  // const post = await Post.find(q)
-  //   .populate({
-  //     path: 'user',
-  //     select: 'name photo',
-  //   })
-  //   .sort(timeSort);
+  // 取出關連的資料，user 資訊
+  const post = await Post.find(q)
+    .populate({
+      path: 'user',
+      select: 'name photo',
+    })
+    .sort(timeSort);
 
-  const post = await Post.find(q).sort(timeSort);
 
   handleSuccess(res, post);
 });
@@ -74,7 +74,9 @@ const createPosts = handleErrorAsync(async (req, res) => {
      */
   const { body } = req;
   body.createdAt = new Date().getTime();
+  console.log(body);
   const postCreate = await Post.create(body);
+  console.log(postCreate);
   handleSuccess(res, postCreate);
 });
 
