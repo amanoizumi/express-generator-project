@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+
+const { isAuth } = require('../service/auth');
+
 const postControllers = require('../controllers/posts');
 
 router.get('/', postControllers.getPosts);

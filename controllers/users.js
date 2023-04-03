@@ -1,6 +1,7 @@
 const User = require('../models/UsersModel');
 const Post = require('../models/PostsModel');
 
+const handleSuccess = require('../service/handleSuccess');
 const handleErrorAsync = require('../service/handleErrorAsync');
 const appError = require('../service/appError');
 
@@ -55,8 +56,9 @@ const signIn = handleErrorAsync(async (req, res, next) => {
 });
 
 const getProfile = handleErrorAsync(async (req, res, next) => {
-  const { user } = req;
-  console.log(user);
+  const { id } = req.user;
+  console.log(id);
+  const user = await User.findById(id).select('+email');
   handleSuccess(res, user);
 });
 
@@ -71,7 +73,6 @@ const updatePassword = handleErrorAsync(async (req, res, next) => {
     password: newPassword,
   });
   generateSendJWT(user, 200, res);
-
 });
 
 module.exports = {
