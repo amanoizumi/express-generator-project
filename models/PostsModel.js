@@ -13,7 +13,6 @@ const postSchema = new mongoose.Schema(
     createdAt: {
       type: Number,
       default: Date.now,
-      select: false,
     },
     user: {
       type: mongoose.Schema.ObjectId,

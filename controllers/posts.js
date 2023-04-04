@@ -31,8 +31,6 @@ const getPosts = handleErrorAsync(async (req, res) => {
       select: 'name photo',
     })
     .sort(timeSort);
-
-
   handleSuccess(res, post);
 });
 
@@ -74,7 +72,6 @@ const createPosts = handleErrorAsync(async (req, res) => {
      */
   const { body } = req;
   body.createdAt = new Date().getTime();
-  console.log(body);
   const postCreate = await Post.create(body);
   console.log(postCreate);
   handleSuccess(res, postCreate);
