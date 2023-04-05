@@ -1,4 +1,5 @@
 const Post = require('../models/PostsModel');
+const Comment = require('../models/CommentsModel');
 
 const handleErrorAsync = require('../service/handleErrorAsync');
 const handleSuccess = require('../service/handleSuccess');
@@ -29,6 +30,10 @@ const getPosts = handleErrorAsync(async (req, res) => {
     .populate({
       path: 'user',
       select: 'name photo',
+    })
+    .populate({
+      path: 'comment',
+      select: 'comment user',
     })
     .sort(timeSort);
   handleSuccess(res, post);
@@ -70,10 +75,17 @@ const createPosts = handleErrorAsync(async (req, res) => {
             }
           }
      */
-  const { body } = req;
-  body.createdAt = new Date().getTime();
-  const postCreate = await Post.create(body);
-  console.log(postCreate);
+
+  const { content } = req.body;
+  if (content == undefined) {
+    return next(appError(400, '你沒有填寫 content 資料', next));
+  }
+
+  req.body.createdAt = new Date().getTime();
+  const postCreate = await Post.create({
+    user: req.user.id,
+    content,
+  });
   handleSuccess(res, postCreate);
 });
 
@@ -129,10 +141,32 @@ const editOnePost = handleErrorAsync(async (req, res) => {
   }
 });
 
+const createComment = handleErrorAsync(async (req, res, next) => {
+  const user = req.user.id;
+  const post = req.params.id;
+
+  const { comment } = req.body;
+
+  console.log(user, post, comment);
+  const newComment = await Comment.create({
+    post,
+    user,
+    comment,
+  });
+
+  res.status(201).json({
+    status: 'success',
+    data: {
+      comments: newComment,
+    },
+  });
+});
+
 module.exports = {
   getPosts,
   createPosts,
   deleteAllPosts,
   deletePostByID,
-  editOnePost
+  editOnePost,
+  createComment,
 };

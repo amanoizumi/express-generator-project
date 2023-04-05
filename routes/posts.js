@@ -6,9 +6,11 @@ const { isAuth } = require('../service/auth');
 const postControllers = require('../controllers/posts');
 
 router.get('/', postControllers.getPosts);
-router.post('/', postControllers.createPosts);
-router.delete('/', postControllers.deleteAllPosts);
-router.delete('/:id', postControllers.deletePostByID);
-router.patch('/:id', postControllers.editOnePost);
+router.post('/', isAuth, postControllers.createPosts);
+router.delete('/', isAuth, postControllers.deleteAllPosts);
+router.delete('/:id', isAuth, postControllers.deletePostByID);
+router.patch('/:id', isAuth, postControllers.editOnePost);
+
+router.post('/:id/comment', isAuth, postControllers.createComment);
 
 module.exports = router;
