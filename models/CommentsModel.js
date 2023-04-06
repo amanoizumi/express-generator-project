@@ -7,7 +7,7 @@ const commentSchema = new mongoose.Schema(
       required: [true, '留言不得為空'],
     },
     createdAt: {
-      type: Date,
+      type: Number,
       default: Date.now,
     },
     user: {
@@ -23,14 +23,13 @@ const commentSchema = new mongoose.Schema(
   },
   {
     versionKey: false,
-    collection: 'comment'
   }
 );
 
 commentSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'user',
-    select: 'name id createdAt',
+    select: 'name id photo',
   });
   next();
 });

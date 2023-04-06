@@ -28,7 +28,9 @@ const postSchema = new mongoose.Schema(
 );
 
 postSchema.virtual('comment', {
+  // 參考指向 comment
   ref: 'comment',
+  // 指向 comment
   foreignField: 'post',
   localField: '_id',
 });

@@ -25,7 +25,7 @@ const getPosts = handleErrorAsync(async (req, res) => {
   const timeSort = req.query.timeSort === 'asc' ? 'createdAt' : '-createdAt';
   const q = req.query.q !== undefined ? { content: new RegExp(req.query.q) } : {};
 
-  // 取出關連的資料，user 資訊
+  // 取出關連的資料，user 以及 comment 資訊
   const post = await Post.find(q)
     .populate({
       path: 'user',
@@ -33,7 +33,7 @@ const getPosts = handleErrorAsync(async (req, res) => {
     })
     .populate({
       path: 'comment',
-      select: 'comment user',
+      select: 'comment user createdAt',
     })
     .sort(timeSort);
   handleSuccess(res, post);
@@ -81,10 +81,11 @@ const createPosts = handleErrorAsync(async (req, res) => {
     return next(appError(400, '你沒有填寫 content 資料', next));
   }
 
-  req.body.createdAt = new Date().getTime();
+  const createdAt = new Date().getTime();
   const postCreate = await Post.create({
     user: req.user.id,
     content,
+    createdAt
   });
   handleSuccess(res, postCreate);
 });
@@ -144,14 +145,14 @@ const editOnePost = handleErrorAsync(async (req, res) => {
 const createComment = handleErrorAsync(async (req, res, next) => {
   const user = req.user.id;
   const post = req.params.id;
-
   const { comment } = req.body;
 
-  console.log(user, post, comment);
+  const createdAt = new Date().getTime();
   const newComment = await Comment.create({
     post,
     user,
     comment,
+    createdAt
   });
 
   res.status(201).json({
