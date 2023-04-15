@@ -38,6 +38,21 @@ const getPosts = handleErrorAsync(async (req, res) => {
     .sort(timeSort);
   handleSuccess(res, post);
 });
+// 取得單一貼文資料
+const getPostByID = handleErrorAsync(async (req, res) => {
+  const { id } = req.params;
+  const post = await Post.findByIdAndDelete(id)
+    .populate({
+      path: 'user',
+      select: 'name photo',
+    })
+    .populate({
+      path: 'comment',
+      select: 'comment user createdAt',
+    });
+
+  handleSuccess(res, post);
+});
 
 const createPosts = handleErrorAsync(async (req, res) => {
   // 錢字號是代表必填
@@ -85,7 +100,7 @@ const createPosts = handleErrorAsync(async (req, res) => {
   const postCreate = await Post.create({
     user: req.user.id,
     content,
-    createdAt
+    createdAt,
   });
   handleSuccess(res, postCreate);
 });
@@ -152,7 +167,7 @@ const createComment = handleErrorAsync(async (req, res, next) => {
     post,
     user,
     comment,
-    createdAt
+    createdAt,
   });
 
   res.status(201).json({
@@ -165,6 +180,7 @@ const createComment = handleErrorAsync(async (req, res, next) => {
 
 module.exports = {
   getPosts,
+  getPostByID,
   createPosts,
   deleteAllPosts,
   deletePostByID,

@@ -42,13 +42,16 @@ const signUp = handleErrorAsync(async (req, res, next) => {
 });
 
 const signIn = handleErrorAsync(async (req, res, next) => {
+
   const { email, password } = req.body;
+  
   if (!email || !password) {
     return next(appError(400, '帳號或密碼不可為空', next));
   }
-  const user = await User.findOne({ email }).select('+password');
 
+  const user = await User.findOne({ email }).select('+password');
   const auth = await bcrypt.compare(password, user.password);
+
   if (!auth) {
     return next(appError(400, '您輸入的密碼不正確', next));
   }

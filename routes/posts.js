@@ -6,6 +6,7 @@ const { isAuth } = require('../service/auth');
 const postControllers = require('../controllers/posts');
 
 router.get('/', postControllers.getPosts);
+router.get('/:id', postControllers.getPostByID);
 router.post('/', isAuth, postControllers.createPosts);
 router.delete('/', postControllers.deleteAllPosts);
 router.delete('/:id', isAuth, postControllers.deletePostByID);
