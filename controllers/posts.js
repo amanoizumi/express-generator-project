@@ -41,7 +41,7 @@ const getPosts = handleErrorAsync(async (req, res) => {
 // 取得單一貼文資料
 const getPostByID = handleErrorAsync(async (req, res) => {
   const { id } = req.params;
-  const post = await Post.findByIdAndDelete(id)
+  const post = await Post.findById(id)
     .populate({
       path: 'user',
       select: 'name photo',
